@@ -22,7 +22,7 @@ namespace ShopsRUs.Api.Controllers
         }
 
         [HttpGet("{customerId}")]
-        public async Task<IActionResult> GetAllOrdersByCustomerId(string customerId)
+        public async Task<IActionResult> GetAllOrdersByCustomerId(long customerId)
         {
             var query = new GetAllOrdersByCustomerIdQuery(customerId);
             var result = await _mediator.Send(query);

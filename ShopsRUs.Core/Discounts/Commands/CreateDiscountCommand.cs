@@ -10,10 +10,10 @@ namespace ShopsRUs.Core.Discounts.Commands
     {
         public string DiscountType { get; }
         public decimal? DiscountAmount { get; }
-        public string DiscountPercentage { get; }
+        public int DiscountPercentage { get; }
         public string PercentageType { get; }
 
-        public CreateDiscountCommand(decimal discountAmount, string discountType, string discountPercentage, string percentageType)
+        public CreateDiscountCommand(decimal discountAmount, string discountType, int discountPercentage, string percentageType)
         {
             DiscountAmount = discountAmount;
             DiscountType = discountType;

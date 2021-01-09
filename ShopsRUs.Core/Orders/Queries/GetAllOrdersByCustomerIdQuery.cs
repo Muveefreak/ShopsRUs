@@ -9,9 +9,9 @@ namespace ShopsRUs.Core.Orders.Queries
 
     public class GetAllOrdersByCustomerIdQuery : IRequest<List<OrderResponse>>
     {
-        public string CustomerId { get; set; }
+        public long CustomerId { get; set; }
 
-        public GetAllOrdersByCustomerIdQuery(string customerId)
+        public GetAllOrdersByCustomerIdQuery(long customerId)
         {
             CustomerId = customerId;
         }

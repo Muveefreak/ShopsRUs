@@ -21,7 +21,7 @@ namespace ShopsRUs.Api.Controllers
         }
 
         [HttpGet("{customerId}")]
-        public async Task<IActionResult> GetTotalInvoiceAmountByCustomerId(string customerId)
+        public async Task<IActionResult> GetTotalInvoiceAmountByCustomerId(long customerId)
         {
             var result = _invoiceService.GetTotalInvoice(customerId, new CancellationTokenSource().Token);
             return result != null ? (IActionResult)Ok(result) : NotFound();

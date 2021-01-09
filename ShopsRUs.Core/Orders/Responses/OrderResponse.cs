@@ -11,5 +11,6 @@ namespace ShopsRUs.Core.Orders.Responses
         public decimal Amount { get; set; }
         public string OrderType { get; set; }
         public long CustomerId { get; set; }
+        public decimal DiscountedAmount { get; set; }
     }
 }

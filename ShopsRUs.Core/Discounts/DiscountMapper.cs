@@ -25,7 +25,7 @@ namespace ShopsRUs.Core.Discounts
             var result = new DiscountResponse
             {
                 DiscountId = discount.DiscountId,
-                DiscountPercentage = discount.DiscountPercentage,
+                DiscountPercent = discount.DiscountPercentage,
                 DiscountType = discount.DiscountType,
             };
 

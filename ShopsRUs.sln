@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShopsRUs.Core", "ShopsRUs.C
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShopsRUs.Infrastructure", "ShopsRUs.Infrastructure\ShopsRUs.Infrastructure.csproj", "{6F4F18C9-D8AE-4616-8820-6FA1D901449A}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ShopsRUs.UnitTests", "ShopsRUs.UnitTests\ShopsRUs.UnitTests.csproj", "{9B497A5D-CEEA-4C53-B162-BB8AB485E232}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{6F4F18C9-D8AE-4616-8820-6FA1D901449A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6F4F18C9-D8AE-4616-8820-6FA1D901449A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6F4F18C9-D8AE-4616-8820-6FA1D901449A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9B497A5D-CEEA-4C53-B162-BB8AB485E232}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9B497A5D-CEEA-4C53-B162-BB8AB485E232}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9B497A5D-CEEA-4C53-B162-BB8AB485E232}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9B497A5D-CEEA-4C53-B162-BB8AB485E232}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
