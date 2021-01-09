@@ -22,6 +22,7 @@ namespace ShopsRUs.Api.Controllers
         }
 
         [HttpGet]
+        [Route("GetAllCustomers")]
         public async Task<IActionResult> GetAllCustomers()
         {
             var query = new GetAllCustomersQuery();
@@ -29,16 +30,18 @@ namespace ShopsRUs.Api.Controllers
             return Ok(result);
         }
 
-        [HttpGet("{customerId}")]
-        public async Task<IActionResult> GetCustomerById(long customerId)
+        [HttpGet]
+        [Route("GetCustomerById")]
+        public async Task<IActionResult> GetCustomerById([FromQuery] long customerId)
         {
             var query = new GetCustomerByIdQuery(customerId);
             var result = await _mediator.Send(query);
             return result != null ? (IActionResult)Ok(result) : NotFound();
         }
 
-        [HttpGet("{customerName}")]
-        public async Task<IActionResult> GetCustomerByName(string customerName)
+        [HttpGet]
+        [Route("GetCustomerByName")]
+        public async Task<IActionResult> GetCustomerByName([FromQuery] string customerName)
         {
             var query = new GetCustomerByNameQuery(customerName);
             var result = await _mediator.Send(query);
@@ -46,7 +49,8 @@ namespace ShopsRUs.Api.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateCustomer([FromBody] CreateCustomerCommand command)
+        [Route("CreateCustomer")]
+        public async Task<IActionResult> CreateCustomer(CreateCustomerCommand command)
         {
             var result = await _mediator.Send(command);
             return CreatedAtAction(nameof(GetCustomerById), new { orderId = result.CustomerId }, result);

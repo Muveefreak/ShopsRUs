@@ -11,7 +11,7 @@ namespace ShopsRUs.Infrastructure.Configuration
         public static IServiceCollection AddDatabase(this IServiceCollection services, string dbConnectionString)
         {
             services
-                .AddDbContext<ShopsRUsDbContext>(o => o.UseSqlite(dbConnectionString));
+                .AddDbContext<ShopsRUsDbContext>(o => o.UseSqlServer(dbConnectionString));
             return services;
         }
     }

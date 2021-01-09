@@ -22,6 +22,7 @@ namespace ShopsRUs.Api.Controllers
         }
 
         [HttpGet]
+        [Route("GetAllDiscounts")]
         public async Task<IActionResult> GetAllDiscounts()
         {
             var query = new GetAllDiscountsQuery();
@@ -29,8 +30,9 @@ namespace ShopsRUs.Api.Controllers
             return Ok(result);
         }
 
-        [HttpGet("{discountType}")]
-        public async Task<IActionResult> GetDiscountPercentageByType(string discountType)
+        [HttpGet]
+        [Route("GetDiscountPercentageByType")]
+        public async Task<IActionResult> GetDiscountPercentageByType([FromQuery] string discountType)
         {
             var query = new GetDiscountPercentageByTypeQuery(discountType);
             var result = await _mediator.Send(query);
@@ -38,7 +40,8 @@ namespace ShopsRUs.Api.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateCustomer([FromBody] CreateDiscountCommand command)
+        [Route("CreateDiscount")]
+        public async Task<IActionResult> CreateDiscount(CreateDiscountCommand command)
         {
             var result = await _mediator.Send(command);
             return CreatedAtAction(nameof(GetDiscountPercentageByType), new { orderId = result.DiscountType }, result);

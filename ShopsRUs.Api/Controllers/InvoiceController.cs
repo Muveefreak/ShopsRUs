@@ -20,11 +20,12 @@ namespace ShopsRUs.Api.Controllers
             _invoiceService = invoiceService;
         }
 
-        [HttpGet("{customerId}")]
-        public async Task<IActionResult> GetTotalInvoiceAmountByCustomerId(long customerId)
+        [HttpGet]
+        [Route("GetTotalInvoiceAmountByCustomerId")]
+        public async Task<IActionResult> GetTotalInvoiceAmountByCustomerId([FromQuery] long customerId)
         {
-            var result = _invoiceService.GetTotalInvoice(customerId, new CancellationTokenSource().Token);
-            return result != null ? (IActionResult)Ok(result) : NotFound();
+            var result = await _invoiceService.GetTotalInvoice(customerId, new CancellationTokenSource().Token);
+            return result != 0M ? (IActionResult)Ok(result) : NotFound();
         }
     }
 }

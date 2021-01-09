@@ -21,8 +21,9 @@ namespace ShopsRUs.Api.Controllers
             _mediator = mediator;
         }
 
-        [HttpGet("{customerId}")]
-        public async Task<IActionResult> GetAllOrdersByCustomerId(long customerId)
+        [HttpGet]
+        [Route("GetAllOrdersByCustomerId")]
+        public async Task<IActionResult> GetAllOrdersByCustomerId([FromQuery] long customerId)
         {
             var query = new GetAllOrdersByCustomerIdQuery(customerId);
             var result = await _mediator.Send(query);
@@ -30,7 +31,8 @@ namespace ShopsRUs.Api.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateOrder([FromBody] CreateOrderCommand command)
+        [Route("CreateOrder")]
+        public async Task<IActionResult> CreateOrder(CreateOrderCommand command)
         {
             var result = await _mediator.Send(command);
             return CreatedAtAction(nameof(GetAllOrdersByCustomerId), new { orderId = result.CustomerId }, result);
