@@ -11,7 +11,7 @@ namespace ShopsRUs.Core.Discounts.Validators
         
         public CreateDiscountValidator()
         {
-            List<string> conditions = new List<string>() { "P", "A" };
+            List<string> conditions = new List<string>() { "Y", "N" };
             String join = String.Join(",", conditions);
 
             RuleFor(x => x.DiscountType)
@@ -21,7 +21,7 @@ namespace ShopsRUs.Core.Discounts.Validators
                 .Must(x => conditions.Contains(x))
                 .WithMessage($"Please only pass: {join} as Discount types.");
 
-            RuleFor(x => x.PercentageType)
+            RuleFor(x => x.IsPercentageType)
                 .NotEmpty().When(x => x.DiscountType == "P").WithMessage("Percentage Type is required.");
 
             RuleFor(x => x.DiscountPercentage)

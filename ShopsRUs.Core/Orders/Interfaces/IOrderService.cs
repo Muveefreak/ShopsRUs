@@ -9,6 +9,6 @@ namespace ShopsRUs.Core.Orders.Interfaces
 {
     public interface IOrderService
     {
-        Task<Decimal> GetTotalInvoice(long customerId, CancellationToken cancellationToken);
+        Task<float> GetTotalInvoice(long customerId, CancellationToken cancellationToken);
     }
 }

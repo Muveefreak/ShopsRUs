@@ -8,9 +8,9 @@ namespace ShopsRUs.Infrastructure.Entities
     {
         public long DiscountId { get; set; }
         public string DiscountType { get; set; }
-        //public decimal? DiscountAmount { get; set; }
-        public int DiscountPercentage { get; set; }
-        //public string PercentageType { get; set; }
+        public float? DiscountAmount { get; set; }
+        public int? DiscountPercentage { get; set; }
+        public string IsPercentageType { get; set; }
 
     }
 }

@@ -8,7 +8,7 @@ namespace ShopsRUs.Core.Discounts.Responses
     {
         public long DiscountId { get; set; }
         public string DiscountType { get; set; }
-        public decimal? DiscountAmount { get; set; }
+        public float? DiscountAmount { get; set; }
         public int DiscountPercent { get; set; }
         public string PercentageDiscount { get; set; }
     }

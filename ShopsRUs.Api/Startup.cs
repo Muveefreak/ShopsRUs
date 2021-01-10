@@ -41,7 +41,7 @@ namespace ShopsRUs.Api
                 ;
 
             services
-                .AddDatabase(_config.GetConnectionString("Database"))
+                .AddDatabase(_config.GetConnectionString("ShopsRUsConnectionString"))
                 .AddCore(_config)
                 .AddMediatR(typeof(CoreServiceCollectionExtensions).Assembly)
                 //.AddRabbitMqMessageBroker(_config.GetSection("MessageBrokerSettings"))

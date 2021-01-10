@@ -24,7 +24,7 @@ namespace ShopsRUs.Core.Orders.Services
         {
             _mediator = mediator;
         }
-        public async Task<Decimal> GetTotalInvoice(long customerId, CancellationToken cancellationToken)
+        public async Task<float> GetTotalInvoice(long customerId, CancellationToken cancellationToken)
         {
             var customerDetailsQuery = new GetCustomerByIdQuery(customerId);
             var customerDetails = await _mediator.Send(customerDetailsQuery);
@@ -54,7 +54,7 @@ namespace ShopsRUs.Core.Orders.Services
         public List<OrderResponse> Orders { get; set; }
         public CustomerResponse Customer { get; set; }
 
-        public decimal Total() => Orders.Sum(x => x.Amount);
+        public float Total() => Orders.Sum(x => x.Amount);
     }
 
     public class DiscountManager
@@ -72,12 +72,12 @@ namespace ShopsRUs.Core.Orders.Services
 
 
 
-        public decimal GetDiscountedTotal()
+        public float GetDiscountedTotal()
         {
             var totalSum = Orders.Sum(x => x.Amount);
-            Decimal totalDiscountedAmount = 0M;
-            Decimal totalDiscountForPercentage = 0M;
-            Decimal totalDiscountForNonPercentage = 0M;
+            float totalDiscountedAmount = 0f;
+            float totalDiscountForPercentage = 0f;
+            float totalDiscountForNonPercentage = 0f;
             foreach (var discount in Discounts)
             {
                 if (discount.PercentageDiscount == "Y")
@@ -86,7 +86,7 @@ namespace ShopsRUs.Core.Orders.Services
                     {
                         foreach (var order in Orders)
                         {
-                            if (order.OrderType != "Grocery")
+                            if (order.OrderType.ToLower() != "groceries")
                             {
                                 order.DiscountedAmount = order.Amount * (discount.DiscountPercent / 100);
                                 totalDiscountForPercentage += order.DiscountedAmount;
@@ -107,8 +107,8 @@ namespace ShopsRUs.Core.Orders.Services
                 }
                 if (discount.PercentageDiscount == "N")
                 {
-                    Decimal valInHundreds = Math.Floor(Convert.ToDecimal(discount.DiscountPercent / 100));
-                    decimal constantDiscount = 5M;
+                    float valInHundreds = (float)Math.Floor(Convert.ToDecimal(discount.DiscountPercent / 100));
+                    float constantDiscount = discount.DiscountAmount.Value;
                     totalDiscountForNonPercentage = constantDiscount * valInHundreds;
                 }
 

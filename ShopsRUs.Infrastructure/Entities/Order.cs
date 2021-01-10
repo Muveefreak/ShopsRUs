@@ -10,7 +10,7 @@ namespace ShopsRUs.Infrastructure.Entities
     {
         public long OrderId { get; set; }
         public string ItemName { get; set; }
-        public decimal Amount { get; set; }
+        public float Amount { get; set; }
         public string OrderType { get; set; }
         public Customer Customer { get; set; }
         public long CustomerId { get; set; }

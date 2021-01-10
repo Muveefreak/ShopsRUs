@@ -25,7 +25,7 @@ namespace ShopsRUs.Api.Controllers
         public async Task<IActionResult> GetTotalInvoiceAmountByCustomerId([FromQuery] long customerId)
         {
             var result = await _invoiceService.GetTotalInvoice(customerId, new CancellationTokenSource().Token);
-            return result != 0M ? (IActionResult)Ok(result) : NotFound();
+            return result != 0f ? (IActionResult)Ok(result) : NotFound();
         }
     }
 }

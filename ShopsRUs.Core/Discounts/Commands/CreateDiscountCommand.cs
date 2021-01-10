@@ -9,16 +9,16 @@ namespace ShopsRUs.Core.Discounts.Commands
     public class CreateDiscountCommand : IRequest<DiscountResponse>
     {
         public string DiscountType { get; }
-        public decimal? DiscountAmount { get; }
+        public float? DiscountAmount { get; }
         public int DiscountPercentage { get; }
-        public string PercentageType { get; }
+        public string IsPercentageType { get; }
 
-        public CreateDiscountCommand(decimal discountAmount, string discountType, int discountPercentage, string percentageType)
+        public CreateDiscountCommand(float discountAmount, string discountType, int discountPercentage, string isPercentageType)
         {
             DiscountAmount = discountAmount;
             DiscountType = discountType;
             DiscountPercentage = discountPercentage;
-            PercentageType = percentageType;
+            IsPercentageType = isPercentageType;
         }
     }
 }
