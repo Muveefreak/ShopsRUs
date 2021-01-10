@@ -29,6 +29,8 @@ namespace ShopsRUs.Core.Discounts
                 DiscountId = discount.DiscountId,
                 DiscountPercent = discount.DiscountPercentage.Value,
                 DiscountType = discount.DiscountType,
+                IsPercentageType = discount.IsPercentageType,
+                DiscountAmount = Convert.ToInt32(discount.DiscountAmount),
             };
 
             return result;

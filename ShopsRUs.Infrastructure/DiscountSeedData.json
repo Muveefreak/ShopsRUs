@@ -1,26 +1,26 @@
 [
   {
-    "DiscountAmount": "",
+    "DiscountAmount": 0,
     "DiscountType": "Affiliate",
-    "IsPercentage": "Y",
+    "IsPercentageType": "Y",
     "DiscountPercentage": 10
   },
   {
-    "DiscountAmount": "",
+    "DiscountAmount": 0,
     "DiscountType": "Employee",
-    "IsPercentage": "Y",
+    "IsPercentageType": "Y",
     "DiscountPercentage": 30
   },
   {
-    "DiscountAmount": "",
+    "DiscountAmount": 0,
     "DiscountType": "Loyalty",
-    "IsPercentage": "Y",
+    "IsPercentageType": "Y",
     "DiscountPercentage": 5
   },
   {
     "DiscountAmount": 5.00,
     "DiscountType": "Price Break",
-    "IsPercentage": "N",
+    "IsPercentageType": "N",
     "DiscountPercentage": 0
   }
 ]

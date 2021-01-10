@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Linq;
 
 namespace ShopsRUs.Core.Discounts.Handlers
 {
@@ -22,8 +23,8 @@ namespace ShopsRUs.Core.Discounts.Handlers
         public async Task<DiscountResponse> Handle(GetDiscountPercentageByTypeQuery request, CancellationToken cancellationToken)
         {
 
-            var discountEntity = await _dbContext.Discounts
-               .FindAsync(request.DiscountType);
+            var discountEntity = _dbContext.Discounts
+               .FirstOrDefault(x => x.DiscountType.ToLower() == request.DiscountType.ToLower());
 
             var response = discountEntity?.ToResponse();
             return response;

@@ -10,11 +10,18 @@ namespace ShopsRUs.Core.Customers.Validators
     {
         public CreateCustomerValidator()
         {
+            List<string> conditions = new List<string>() { "Affiliate", "Employee" };
+            String join = String.Join(",", conditions);
+
             RuleFor(x => x.CustomerName)
                 .NotEmpty().WithMessage("Customer Name is required.");
 
             RuleFor(x => x.CustomerType)
                 .NotEmpty().WithMessage("Customer Type is required.");
+
+            RuleFor(x => x.CustomerType)
+                .Must(x => conditions.Contains(x))
+                .WithMessage($"Please only pass: {join} as Discount types.");
         }
     }
 }

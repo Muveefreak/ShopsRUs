@@ -23,10 +23,10 @@ namespace ShopsRUs.Core.Orders.Handlers
 
         public async Task<List<OrderResponse>> Handle(GetAllOrdersByCustomerIdQuery request, CancellationToken cancellationToken)
         {
-            var orderStatus = Enums.OrderStatus.Unpaid.ToString();
-            var orders = await _dbContext.Orders.ToListAsync(cancellationToken: cancellationToken);
+            var orderStatus = ((char)Enums.OrderStatus.Unpaid).ToString(); 
+            var orders = _dbContext.Orders.AsQueryable().Where(x => x.CustomerId == request.CustomerId && x.OrderStatus == orderStatus);
 
-            var responses = orders.Where(x => x.OrderStatus == orderStatus).Select(x => x.ToResponse()).ToList();
+            var responses = orders.Select(x => x.ToResponse()).ToList();
 
             return responses;
 

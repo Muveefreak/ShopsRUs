@@ -26,7 +26,8 @@ namespace ShopsRUs.Core.Customers
             {
                 CustomerId = customer.Id,
                 CustomerName = customer.CustomerName,
-                CustomerType = customer.CustomerType
+                CustomerType = customer.CustomerType,
+                CreatedDate = customer.CreatedDate
             };
 
             return result;

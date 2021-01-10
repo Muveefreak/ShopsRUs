@@ -29,7 +29,9 @@ namespace ShopsRUs.Infrastructure.Migrations
                     DiscountId = table.Column<long>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     DiscountType = table.Column<string>(nullable: true),
-                    DiscountPercentage = table.Column<int>(nullable: false)
+                    DiscountAmount = table.Column<float>(nullable: true),
+                    DiscountPercentage = table.Column<int>(nullable: true),
+                    IsPercentageType = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -43,7 +45,7 @@ namespace ShopsRUs.Infrastructure.Migrations
                     OrderId = table.Column<long>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     ItemName = table.Column<string>(nullable: true),
-                    Amount = table.Column<decimal>(nullable: false),
+                    Amount = table.Column<float>(nullable: false),
                     OrderType = table.Column<string>(nullable: true),
                     CustomerId = table.Column<long>(nullable: false),
                     OrderStatus = table.Column<string>(nullable: true)

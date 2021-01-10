@@ -14,11 +14,11 @@ namespace ShopsRUs.Infrastructure
         {
             if (await context.Customers.AnyAsync()) return;
 
-            var customerData = await System.IO.File.ReadAllTextAsync("Data/CustomerSeedData.json");
+            var customerData = await System.IO.File.ReadAllTextAsync("../ShopsRUs.Infrastructure/CustomerSeedData.json");
 
             var customers = JsonSerializer.Deserialize<List<Customer>>(customerData);
 
-            foreach(var customer in customers)
+            foreach (var customer in customers)
             {
                 customer.CustomerName = customer.CustomerName.ToLower();
 
@@ -32,7 +32,7 @@ namespace ShopsRUs.Infrastructure
         {
             if (await context.Discounts.AnyAsync()) return;
 
-            var discountData = await System.IO.File.ReadAllTextAsync("Data/DiscountSeedData.json");
+            var discountData = await System.IO.File.ReadAllTextAsync("../ShopsRUs.Infrastructure/DiscountSeedData.json");
 
             var discounts = JsonSerializer.Deserialize<List<Discount>>(discountData);
 
@@ -51,24 +51,24 @@ namespace ShopsRUs.Infrastructure
             if (await context.Orders.AnyAsync()) return;
 
 
-            string list = default(string);
-            var orderData = await System.IO.File.ReadAllTextAsync("Data/OrderSeedData.json");
+            List<Int64> listIds = new List<Int64>();
+            var orderData = await System.IO.File.ReadAllTextAsync("../ShopsRUs.Infrastructure/OrderSeedData.json");
 
             var orders = JsonSerializer.Deserialize<List<Order>>(orderData);
 
+            var customers = await context.Customers.ToListAsync();
+
+            customers.ForEach(x =>
+            {
+                listIds.Add(x.Id);
+            });
+
             foreach (var order in orders)
             {
-                var customers = await context.Customers.ToListAsync();
-
-                customers.ForEach(x =>
-                {
-                    list = String.Join(",", x.Id);
-                });
-
-                Int64[] newList = Array.ConvertAll(list.Split(','), s => Int64.Parse(s));
+                //Int64[] newList = Array.ConvertAll(list.Split(','), s => Int64.Parse(s));
                 Random random = new Random();
-                long rnd = random.Next(0, newList.Length);
-                order.CustomerId = newList[rnd];
+                int rnd = random.Next(0, listIds.Count);
+                order.CustomerId = listIds[rnd];
 
                 context.Orders.Add(order);
             }

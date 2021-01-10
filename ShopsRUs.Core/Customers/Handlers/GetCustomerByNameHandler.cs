@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
+using System.Linq;
 
 namespace ShopsRUs.Core.Customers.Handlers
 {
@@ -21,8 +22,8 @@ namespace ShopsRUs.Core.Customers.Handlers
 
         public async Task<CustomerResponse> Handle(GetCustomerByNameQuery request, CancellationToken cancellationToken)
         {
-            var customerEntity = await _dbContext.Customers
-                .FindAsync(request.CustomerName);
+            var customerEntity = _dbContext.Customers
+                .FirstOrDefault(x => x.CustomerName == request.CustomerName);
 
             var response = customerEntity?.ToResponse();
             return response;

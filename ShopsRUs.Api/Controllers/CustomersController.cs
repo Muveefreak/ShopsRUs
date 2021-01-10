@@ -50,7 +50,7 @@ namespace ShopsRUs.Api.Controllers
 
         [HttpPost]
         [Route("CreateCustomer")]
-        public async Task<IActionResult> CreateCustomer(CreateCustomerCommand command)
+        public async Task<IActionResult> CreateCustomer([FromBody] CreateCustomerCommand command)
         {
             var result = await _mediator.Send(command);
             return CreatedAtAction(nameof(GetCustomerById), new { orderId = result.CustomerId }, result);
