@@ -10,6 +10,9 @@ namespace ShopsRUs.Infrastructure.Configuration
     {
         public static IServiceCollection AddDatabase(this IServiceCollection services, string dbConnectionString)
         {
+
+            Seed.ConfigurationSettings = dbConnectionString;
+
             services
                 .AddDbContext<ShopsRUsDbContext>(o => o.UseSqlServer(dbConnectionString));
             return services;

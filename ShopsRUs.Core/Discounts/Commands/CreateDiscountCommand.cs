@@ -6,7 +6,7 @@ using System.Text;
 
 namespace ShopsRUs.Core.Discounts.Commands
 {
-    public class CreateDiscountCommand : IRequest<DiscountResponse>
+    public class CreateDiscountCommand : IRequest<(DiscountResponse response, string message, bool isSuccess)>
     {
         public string DiscountType { get; }
         public int? DiscountAmount { get; }

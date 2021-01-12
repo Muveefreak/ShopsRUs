@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using MediatR;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using ShopsRUs.Core.Configuration;
 using ShopsRUs.Core.Customers.Commands;
 using ShopsRUs.Core.Customers.Queries;
 
@@ -27,7 +28,17 @@ namespace ShopsRUs.Api.Controllers
         {
             var query = new GetAllCustomersQuery();
             var result = await _mediator.Send(query);
-            return Ok(result);
+
+            if (result.isSuccess)
+            {
+                return Ok(new ApiResponse
+                {
+                    ResponseCode = "00",
+                    ResponseDescription = result.message,
+                    Data = result.response
+                });
+            }
+            return NotFound(new ApiResponse { ResponseCode = "01", ResponseDescription = result.message, Data = null });
         }
 
         [HttpGet]
@@ -36,7 +47,17 @@ namespace ShopsRUs.Api.Controllers
         {
             var query = new GetCustomerByIdQuery(customerId);
             var result = await _mediator.Send(query);
-            return result != null ? (IActionResult)Ok(result) : NotFound();
+
+            if (result.isSuccess)
+            {
+                return Ok(new ApiResponse
+                {
+                    ResponseCode = "00",
+                    ResponseDescription = result.message,
+                    Data = result.response
+                });
+            }
+            return NotFound(new ApiResponse { ResponseCode = "01", ResponseDescription = result.message, Data = null });
         }
 
         [HttpGet]
@@ -45,7 +66,17 @@ namespace ShopsRUs.Api.Controllers
         {
             var query = new GetCustomerByNameQuery(customerName);
             var result = await _mediator.Send(query);
-            return result != null ? (IActionResult)Ok(result) : NotFound();
+
+            if (result.isSuccess)
+            {
+                return Ok(new ApiResponse
+                {
+                    ResponseCode = "00",
+                    ResponseDescription = result.message,
+                    Data = result.response
+                });
+            }
+            return NotFound(new ApiResponse { ResponseCode = "01", ResponseDescription = result.message, Data = null });
         }
 
         [HttpPost]
@@ -53,7 +84,18 @@ namespace ShopsRUs.Api.Controllers
         public async Task<IActionResult> CreateCustomer([FromBody] CreateCustomerCommand command)
         {
             var result = await _mediator.Send(command);
-            return CreatedAtAction(nameof(GetCustomerById), new { orderId = result.CustomerId }, result);
+
+            if(result.isSuccess)
+            {
+                return Ok(new ApiResponse
+                {
+                    ResponseCode = "00",
+                    ResponseDescription = result.message,
+                    Data = result.response
+                });
+            }
+            return NotFound(new ApiResponse { ResponseCode = "01", ResponseDescription = result.message, Data = null });
+
         }
     }
 }

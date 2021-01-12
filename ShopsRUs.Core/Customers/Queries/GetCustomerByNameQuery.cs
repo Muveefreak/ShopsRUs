@@ -6,7 +6,7 @@ using System.Text;
 
 namespace ShopsRUs.Core.Customers.Queries
 {
-    public class GetCustomerByNameQuery : IRequest<CustomerResponse>
+    public class GetCustomerByNameQuery : IRequest<(CustomerResponse response, string message, bool isSuccess)>
     {
         public string CustomerName { get; set; }
 

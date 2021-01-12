@@ -10,8 +10,8 @@ using ShopsRUs.Infrastructure;
 namespace ShopsRUs.Infrastructure.Migrations
 {
     [DbContext(typeof(ShopsRUsDbContext))]
-    [Migration("20210110001030_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20210110175700_Initial")]
+    partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

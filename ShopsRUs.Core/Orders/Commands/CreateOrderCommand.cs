@@ -6,7 +6,7 @@ using System.Text;
 
 namespace ShopsRUs.Core.Orders.Commands
 {
-    public class CreateOrderCommand : IRequest<OrderResponse>
+    public class CreateOrderCommand : IRequest<(OrderResponse response, string message, bool isSuccess)>
     {
         public string ItemName { get; }
         public float Amount { get; }

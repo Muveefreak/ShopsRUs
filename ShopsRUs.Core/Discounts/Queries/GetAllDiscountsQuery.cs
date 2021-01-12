@@ -6,7 +6,7 @@ using System.Text;
 
 namespace ShopsRUs.Core.Discounts.Queries
 {
-    public class GetAllDiscountsQuery : IRequest<List<DiscountResponse>>
+    public class GetAllDiscountsQuery : IRequest<(List<DiscountResponse> response, string message, bool isSuccess)>
     {
     }
 }

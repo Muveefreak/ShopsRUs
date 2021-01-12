@@ -5,6 +5,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using ShopsRUs.Core.Configuration;
 using ShopsRUs.Core.Orders.Interfaces;
 
 namespace ShopsRUs.Api.Controllers
@@ -25,7 +26,14 @@ namespace ShopsRUs.Api.Controllers
         public async Task<IActionResult> GetTotalInvoiceAmountByCustomerId([FromQuery] long customerId)
         {
             var result = await _invoiceService.GetTotalInvoice(customerId, new CancellationTokenSource().Token);
-            return result != 0f ? (IActionResult)Ok(result) : NotFound();
+
+            
+            return Ok(new ApiResponse
+            {
+                ResponseCode = "00",
+                ResponseDescription = result.message,
+                Data = result.response
+            });
         }
     }
 }

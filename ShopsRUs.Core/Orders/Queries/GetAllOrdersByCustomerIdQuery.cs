@@ -7,7 +7,7 @@ using System.Text;
 namespace ShopsRUs.Core.Orders.Queries
 {
 
-    public class GetAllOrdersByCustomerIdQuery : IRequest<List<OrderResponse>>
+    public class GetAllOrdersByCustomerIdQuery : IRequest<(List<OrderResponse> response, string message, bool isSuccess)>
     {
         public long CustomerId { get; set; }
 

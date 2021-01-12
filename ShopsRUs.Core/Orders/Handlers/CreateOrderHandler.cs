@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 namespace ShopsRUs.Core.Orders.Handlers
 {
 
-    public class CreateOrderHandler : IRequestHandler<CreateOrderCommand, OrderResponse>
+    public class CreateOrderHandler : IRequestHandler<CreateOrderCommand, (OrderResponse response, string message, bool isSuccess)>
     {
         private readonly ShopsRUsDbContext _dbContext;
 
@@ -20,7 +20,7 @@ namespace ShopsRUs.Core.Orders.Handlers
             _dbContext = dbContext;
         }
 
-        public async Task<OrderResponse> Handle(CreateOrderCommand request, CancellationToken cancellationToken)
+        public async Task<(OrderResponse response, string message, bool isSuccess)> Handle(CreateOrderCommand request, CancellationToken cancellationToken)
         {
             var order = request.ToCreateEntity();
 
@@ -29,7 +29,7 @@ namespace ShopsRUs.Core.Orders.Handlers
 
             var response = order.ToResponse();
 
-            return response;
+            return (response, "Order Type is successfully created", true);
         }
     }
 }

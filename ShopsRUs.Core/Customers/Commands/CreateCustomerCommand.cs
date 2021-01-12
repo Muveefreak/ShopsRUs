@@ -6,7 +6,7 @@ using System.Text;
 
 namespace ShopsRUs.Core.Customers.Commands
 {
-    public class CreateCustomerCommand : IRequest<CustomerResponse>
+    public class CreateCustomerCommand : IRequest<(CustomerResponse response, string message, bool isSuccess)>
     {
         public string CustomerName { get; }
         public string CustomerType { get; }

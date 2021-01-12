@@ -6,6 +6,13 @@ namespace ShopsRUs.Core.Configuration
 {
     public class ShopsRUsSettings
     {
-        public string DbConnectionString { get; set; }
+        public static string DbConnectionString { get; set; }
+    }
+
+    public class ApiResponse
+    {
+        public string ResponseCode { get; set; }
+        public string ResponseDescription { get; set; }
+        public object Data { get; set; }
     }
 }

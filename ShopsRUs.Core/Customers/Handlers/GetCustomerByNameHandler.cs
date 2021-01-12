@@ -11,7 +11,7 @@ using System.Linq;
 
 namespace ShopsRUs.Core.Customers.Handlers
 {
-    public class GetCustomerByNameHandler : IRequestHandler<GetCustomerByNameQuery, CustomerResponse>
+    public class GetCustomerByNameHandler : IRequestHandler<GetCustomerByNameQuery, (CustomerResponse response, string message, bool isSuccess)>
     {
         private readonly ShopsRUsDbContext _dbContext;
 
@@ -20,13 +20,19 @@ namespace ShopsRUs.Core.Customers.Handlers
             _dbContext = dbContext;
         }
 
-        public async Task<CustomerResponse> Handle(GetCustomerByNameQuery request, CancellationToken cancellationToken)
+        public async Task<(CustomerResponse response, string message, bool isSuccess)> Handle(GetCustomerByNameQuery request, CancellationToken cancellationToken)
         {
             var customerEntity = _dbContext.Customers
                 .FirstOrDefault(x => x.CustomerName == request.CustomerName);
 
             var response = customerEntity?.ToResponse();
-            return response;
+
+            if (response == null)
+            {
+                return (null, "Customer does not exist", false);
+            }
+
+            return (response, "Successful", true);
         }
     }
 }

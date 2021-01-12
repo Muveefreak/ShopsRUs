@@ -13,7 +13,7 @@ namespace ShopsRUs.Core.Discounts
         {
             var result = new Discount
             {
-                DiscountType = command.DiscountType,
+                DiscountType = command.DiscountType.ToLower(),
                 DiscountPercentage = command.DiscountPercentage,
                 IsPercentageType = command.IsPercentageType,
                 DiscountAmount = command.DiscountAmount,

@@ -11,7 +11,7 @@ using System.Linq;
 
 namespace ShopsRUs.Core.Discounts.Handlers
 {
-    public class GetDiscountPercentageByTypeHandler : IRequestHandler<GetDiscountPercentageByTypeQuery, DiscountResponse>
+    public class GetDiscountPercentageByTypeHandler : IRequestHandler<GetDiscountPercentageByTypeQuery, (DiscountResponse response, string message, bool isSuccess)>
     {
         private readonly ShopsRUsDbContext _dbContext;
 
@@ -20,15 +20,20 @@ namespace ShopsRUs.Core.Discounts.Handlers
             _dbContext = dbContext;
         }
 
-        public async Task<DiscountResponse> Handle(GetDiscountPercentageByTypeQuery request, CancellationToken cancellationToken)
+        public async Task<(DiscountResponse response, string message, bool isSuccess)> Handle(GetDiscountPercentageByTypeQuery request, CancellationToken cancellationToken)
         {
 
             var discountEntity = _dbContext.Discounts
                .FirstOrDefault(x => x.DiscountType.ToLower() == request.DiscountType.ToLower());
 
             var response = discountEntity?.ToResponse();
-            return response;
 
+            if (response == null)
+            {
+                return (null, "Discount type does not exist", false);
+            }
+
+            return (response, "Successful", true);
         }
     }
 

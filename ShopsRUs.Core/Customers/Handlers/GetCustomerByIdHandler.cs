@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 namespace ShopsRUs.Core.Customers.Handlers
 {
 
-    public class GetCustomerByIdHandler : IRequestHandler<GetCustomerByIdQuery, CustomerResponse>
+    public class GetCustomerByIdHandler : IRequestHandler<GetCustomerByIdQuery, (CustomerResponse response, string message, bool isSuccess)>
     {
         private readonly ShopsRUsDbContext _dbContext;
 
@@ -20,13 +20,19 @@ namespace ShopsRUs.Core.Customers.Handlers
             _dbContext = dbContext;
         }
 
-        public async Task<CustomerResponse> Handle(GetCustomerByIdQuery request, CancellationToken cancellationToken)
+        public async Task<(CustomerResponse response, string message, bool isSuccess)> Handle(GetCustomerByIdQuery request, CancellationToken cancellationToken)
         {
             var customerEntity = await _dbContext.Customers
                 .FindAsync(request.CustomerId);
 
             var response = customerEntity?.ToResponse();
-            return response;
+
+            if (response == null)
+            {
+                return (null, "Customer does not exist", false);
+            }
+
+            return (response, "Successful", true);
         }
     }
 }

@@ -24,22 +24,37 @@ namespace ShopsRUs.Core.Orders.Services
         {
             _mediator = mediator;
         }
-        public async Task<float> GetTotalInvoice(long customerId, CancellationToken cancellationToken)
+        public async Task<(float response, string message, bool isSuccess)> GetTotalInvoice(long customerId, CancellationToken cancellationToken)
         {
             var customerDetailsQuery = new GetCustomerByIdQuery(customerId);
             var customerDetails = await _mediator.Send(customerDetailsQuery);
 
+            if(!customerDetails.isSuccess)
+            {
+                return (0f, $"Unable to complete request \n{customerDetails.message}", false);
+            }
+
             var customerOrdersQuery = new GetAllOrdersByCustomerIdQuery(customerId);
             var customerOrders = await _mediator.Send(customerOrdersQuery);
 
+            if (!customerOrders.isSuccess)
+            {
+                return (0f, $"Unable to complete request \n{customerOrders.message}", false);
+            }
+
             var discountsQuery = new GetAllDiscountsQuery();
             var discounts = await _mediator.Send(discountsQuery);
+
+            if (!discounts.isSuccess)
+            {
+                return (0f, $"Unable to complete request \n{discounts.message}", false);
+            }
 
 
             var discountManager = new DiscountManager(customerDetails, customerOrders, discounts);
             var totalInvoiceWithDiscount = discountManager.GetDiscountedTotal();
 
-            return totalInvoiceWithDiscount;
+            return (totalInvoiceWithDiscount, "Success", true);
         }
     }
 
@@ -59,11 +74,12 @@ namespace ShopsRUs.Core.Orders.Services
 
     public class DiscountManager
     {
-        public DiscountManager(CustomerResponse customer, List<OrderResponse> orders, List<DiscountResponse> discounts)
+        public DiscountManager((CustomerResponse response, string message, bool isSuccess) customer, (List<OrderResponse> response, 
+            string message, bool isSuccess) orders, (List<DiscountResponse> response, string message, bool isSuccess) discounts)
         {
-            Customer = customer;
-            Orders = orders;
-            Discounts = discounts;
+            Customer = customer.response;
+            Orders = orders.response;
+            Discounts = discounts.response;
         }
 
         public List<OrderResponse> Orders { get; set; }
@@ -81,29 +97,35 @@ namespace ShopsRUs.Core.Orders.Services
 
             var customerDiscount = Discounts.FirstOrDefault(x => x.DiscountType.ToLower().Trim() == Customer.CustomerType.ToLower().Trim());
 
-            if(customerDiscount != null) 
+            int percentageCount = 0; // Number Of Percentage Discounts Customer Qualifies For
+            // customer Type Discount ie Affilliate or Employee
+            if (customerDiscount != null && customerDiscount.IsPercentageType == "Y" && percentageCount == 0) 
             {
+                percentageCount++;
                 foreach (var order in Orders)
                 {
-                    if (order.OrderType.ToLower() != "groceries" && customerDiscount.IsPercentageType == "Y")
+                    if (order.OrderType.ToLower() != "groceries")
                     {
                         var discountedAmount = order.Amount * ((float)customerDiscount.DiscountPercent / 100);
                         totalDiscountForPercentage += discountedAmount;
                     }
                 }
             }
-            // customer is not an affiliate or employee
-            else if (Customer.GetAge() > 2)
+            // Loyalty Discount
+            if (Customer.GetAge() > 2 && customerDiscount.IsPercentageType == "Y" && percentageCount == 0)
             {
+                percentageCount++;
                 foreach (var order in Orders)
                 {
-                    if (order.OrderType.ToLower() != "groceries" && customerDiscount.IsPercentageType == "Y")
+                    if (order.OrderType.ToLower() != "groceries")
                     {
                         var discountedAmount = order.Amount * ((float)customerDiscount.DiscountPercent / 100);
                         totalDiscountForPercentage += discountedAmount;
                     }
                 }
             }
+
+            // Discount Price break
             var discountType = "price break";
             var constantDiscount = Discounts.FirstOrDefault(x => x.DiscountType.ToLower().Trim() == discountType.ToLower().Trim());
 

@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace ShopsRUs.Core.Customers.Handlers
 {
-    public class GetAllCustomersHandler : IRequestHandler<GetAllCustomersQuery, List<CustomerResponse>>
+    public class GetAllCustomersHandler : IRequestHandler<GetAllCustomersQuery, (List<CustomerResponse> response, string message, bool isSuccess)>
     {
         private readonly ShopsRUsDbContext _dbContext;
 
@@ -21,13 +21,18 @@ namespace ShopsRUs.Core.Customers.Handlers
             _dbContext = dbContext;
         }
 
-        public async Task<List<CustomerResponse>> Handle(GetAllCustomersQuery request, CancellationToken cancellationToken)
+        public async Task<(List<CustomerResponse> response, string message, bool isSuccess)> Handle(GetAllCustomersQuery request, CancellationToken cancellationToken)
         {
             var customers = await _dbContext.Customers.ToListAsync(cancellationToken: cancellationToken);
 
             var responses = customers.Select(x => x.ToResponse()).ToList();
 
-            return responses;
+            if(responses.Count < 1)
+            {
+                return (null, "Failed", false);
+            }
+
+            return (responses, "Successful", true);
         }
     }
 }

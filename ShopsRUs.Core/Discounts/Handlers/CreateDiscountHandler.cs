@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace ShopsRUs.Core.Discounts.Handlers
 {
-    public class CreateDiscountHandler : IRequestHandler<CreateDiscountCommand, DiscountResponse>
+    public class CreateDiscountHandler : IRequestHandler<CreateDiscountCommand, (DiscountResponse response, string message, bool isSuccess)>
     {
         private readonly ShopsRUsDbContext _dbContext;
 
@@ -19,7 +19,7 @@ namespace ShopsRUs.Core.Discounts.Handlers
             _dbContext = dbContext;
         }
 
-        public async Task<DiscountResponse> Handle(CreateDiscountCommand request, CancellationToken cancellationToken)
+        public async Task<(DiscountResponse response, string message, bool isSuccess)> Handle(CreateDiscountCommand request, CancellationToken cancellationToken)
         {
             var discount = request.ToCreateEntity();
 
@@ -28,7 +28,7 @@ namespace ShopsRUs.Core.Discounts.Handlers
 
             var response = discount.ToResponse();
 
-            return response;
+            return (response, "Discount type successfully created", true);
         }
     }
 }

@@ -14,6 +14,9 @@ namespace ShopsRUs.Core.Configuration
         public static IServiceCollection AddCore(this IServiceCollection container, IConfiguration config)
         {
             var settings = new ShopsRUsSettings();
+
+
+
             config.Bind(settings);
 
             container

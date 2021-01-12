@@ -13,8 +13,8 @@ namespace ShopsRUs.Core.Customers
         {
             var result = new Customer
             {
-                CustomerName = command.CustomerName,
-                CustomerType = command.CustomerType
+                CustomerName = command.CustomerName.ToLower(),
+                CustomerType = command.CustomerType.ToLower()
             };
 
             return result;

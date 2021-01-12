@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace ShopsRUs.Core.Discounts.Handlers
 {
-    class GetAllDiscountsHandler : IRequestHandler<GetAllDiscountsQuery, List<DiscountResponse>>
+    class GetAllDiscountsHandler : IRequestHandler<GetAllDiscountsQuery, (List<DiscountResponse> response, string message, bool isSuccess)>
     {
         private readonly ShopsRUsDbContext _dbContext;
 
@@ -21,13 +21,18 @@ namespace ShopsRUs.Core.Discounts.Handlers
             _dbContext = dbContext;
         }
 
-        public async Task<List<DiscountResponse>> Handle(GetAllDiscountsQuery request, CancellationToken cancellationToken)
+        public async Task<(List<DiscountResponse> response, string message, bool isSuccess)> Handle(GetAllDiscountsQuery request, CancellationToken cancellationToken)
         {
             var discounts = await _dbContext.Discounts.ToListAsync(cancellationToken: cancellationToken);
 
             var responses = discounts.Select(x => x.ToResponse()).ToList();
 
-            return responses;
+            if (responses.Count < 1)
+            {
+                return (null, "Failed", false);
+            }
+
+            return (responses, "Successful", true);
         }
     }
 }
