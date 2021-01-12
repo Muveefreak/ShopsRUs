@@ -21,14 +21,15 @@ namespace ShopsRUs.Infrastructure
             if (await context.Customers.AnyAsync()) return;
 
             string customerData = default(string);
-
-            if (String.IsNullOrEmpty(Seed.ConfigurationSettings)) // If empty use this path
+            string currentDirectory = Directory.GetCurrentDirectory();
+            int index = currentDirectory.LastIndexOf('\\');
+            if (currentDirectory.Substring(index + 1) == "ShopsRUs.Api")
             {
-                customerData = await System.IO.File.ReadAllTextAsync(System.IO.Path.Combine(System.AppDomain.CurrentDomain.BaseDirectory, "CustomerSeedData.json"));
+                customerData = await System.IO.File.ReadAllTextAsync("../ShopsRUs.Infrastructure/CustomerSeedData.json");
             }
             else
             {
-                customerData = await System.IO.File.ReadAllTextAsync("../ShopsRUs.Infrastructure/CustomerSeedData.json");
+                customerData = await System.IO.File.ReadAllTextAsync(System.IO.Path.Combine(System.AppDomain.CurrentDomain.BaseDirectory, "CustomerSeedData.json"));
             }
 
 
@@ -51,13 +52,15 @@ namespace ShopsRUs.Infrastructure
 
             string discountData = default(string);
 
-            if (String.IsNullOrEmpty(Seed.ConfigurationSettings)) // If empty use this path
+            string currentDirectory = Directory.GetCurrentDirectory();
+            int index = currentDirectory.LastIndexOf('\\');
+            if (currentDirectory.Substring(index + 1) == "ShopsRUs.Api")
             {
-                discountData = await System.IO.File.ReadAllTextAsync(System.IO.Path.Combine(System.AppDomain.CurrentDomain.BaseDirectory, "DiscountSeedData.json"));
+                discountData = await System.IO.File.ReadAllTextAsync("../ShopsRUs.Infrastructure/DiscountSeedData.json");
             }
             else
             {
-                discountData = await System.IO.File.ReadAllTextAsync("../ShopsRUs.Infrastructure/DiscountSeedData.json");
+                discountData = await System.IO.File.ReadAllTextAsync(System.IO.Path.Combine(System.AppDomain.CurrentDomain.BaseDirectory, "DiscountSeedData.json"));
             }
 
 
@@ -79,13 +82,15 @@ namespace ShopsRUs.Infrastructure
 
             string orderData = default(string);
 
-            if (String.IsNullOrEmpty(Seed.ConfigurationSettings)) // If empty use this path
+            string currentDirectory = Directory.GetCurrentDirectory();
+            int index = currentDirectory.LastIndexOf('\\');
+            if (currentDirectory.Substring(index + 1) == "ShopsRUs.Api")
             {
-                orderData = await System.IO.File.ReadAllTextAsync(System.IO.Path.Combine(System.AppDomain.CurrentDomain.BaseDirectory, "OrderSeedData.json"));
+                orderData = await System.IO.File.ReadAllTextAsync("../ShopsRUs.Infrastructure/OrderSeedData.json");
             }
             else
             {
-                orderData = await System.IO.File.ReadAllTextAsync("../ShopsRUs.Infrastructure/OrderSeedData.json");
+                orderData = await System.IO.File.ReadAllTextAsync(System.IO.Path.Combine(System.AppDomain.CurrentDomain.BaseDirectory, "OrderSeedData.json"));
             }
 
             List<Int64> listIds = new List<Int64>();
